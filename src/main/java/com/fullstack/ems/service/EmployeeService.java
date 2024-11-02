@@ -1,0 +1,20 @@
+package com.fullstack.ems.service;
+
+import java.util.List;
+import java.util.Optional;
+
+import com.fullstack.ems.entity.Employee;
+
+public interface EmployeeService {
+	List<Employee> getEmployees();
+
+	Optional<Employee> getEmployee(Long id);
+
+	Employee saveEmployee(Employee employee);
+
+	Employee updateEmployee(Long id, Employee employee);
+
+	Employee updateEmployeePartial(Long id, Employee employee);
+
+	void deleteEmployee(Long id);
+}
