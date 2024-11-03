@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.reactive.function.client.WebClient;
 
+import com.fullstack.ems.common.Constants;
 import com.fullstack.ems.entity.Teacher;
 import com.fullstack.ems.repository.TeacherRepository;
 
@@ -20,6 +21,8 @@ public class TeacherServiceImpl implements TeacherService {
 
 	@Value("${ems}") //only one environment variable
 	private String emsUrl;
+	
+	String subjectUrl = Constants.SUBJECT_URL;
 	
 	@Autowired
 	private TeacherRepository teacherRepository;
@@ -55,14 +58,14 @@ public class TeacherServiceImpl implements TeacherService {
 
 	//Using rest template to make api call 
 	public String getSubjects(Long id) {
-		return restTemplate.getForEntity(environment.getProperty("ems")+"/v1/subject", String.class).getBody();
+		return restTemplate.getForEntity(environment.getProperty("ems")+subjectUrl, String.class).getBody();
 		//return restTemplate.getForEntity("http://localhost:8080/ems/v1/subject", String.class).getBody();
 	}
 	
 	//Using Web Client to make api call 
 	public String getSubjects() {
 		WebClient webClient = WebClient.builder().baseUrl(emsUrl).build();
-		return webClient.get().uri("/v1/subject").retrieve().bodyToMono(String.class).block();
+		return webClient.get().uri(subjectUrl).retrieve().bodyToMono(String.class).block();
 	}
 
 }
