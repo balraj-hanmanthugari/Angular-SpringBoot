@@ -4,14 +4,14 @@
 <head>
 	<meta charset="ISO-8859-1">
 	<title>Employee Management System</title>
-	<link rel="stylesheet" href="../static/css/styles.css" />
-	<script type="text/javascript" src="../static/js/scripts.js"></script>
+	<link rel="stylesheet" href="/css/styles.css" />
+	<script type="text/javascript" src="/js/scripts.js"></script>
 </head>
 
 <body>
 	<div align="center">
-		<a th:href="@{/ems/employee/addForm}">Add Employee</a>
 		<h1>Employee List</h1>
+		<a th:href="@{/ems/employee/form}">Add Employee</a>
 		<table border="1">
 			<thead>
 				<tr>
@@ -25,7 +25,7 @@
 					<td th:text="${employee.firstName}"></td>
 					<td th:text="${employee.lastName}"></td>
 					<td>
-						<a th:href="@{/ems/employee/updateForm/{id}(id=${employee.id})}">Update</a>
+						<a th:href="@{/ems/employee/form/{id}(id=${employee.id})}">Update</a>
 						<a th:href="@{/ems/employee/delete/{id}(id=${employee.id})}">Delete</a>
 					</td>
 				</tr>

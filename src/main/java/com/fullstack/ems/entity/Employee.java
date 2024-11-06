@@ -9,6 +9,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 @Entity
@@ -19,7 +20,8 @@ public class Employee {
 	private Long id;
 
 	@NotEmpty
-	@Size(max = 30)
+	@NotNull
+	@Size(min=2, max = 30)
 	@Column(name = "first_name")
 	private String firstName;
 

@@ -35,28 +35,27 @@ public class EmployeeController {
 		return "employee-list";
 	}
 
-	@GetMapping(value = "/addForm")
+	@GetMapping(value = "/form")
 	public ModelAndView getEmployeeAddFom(ModelAndView modelAndView) {
 		Employee employee = new Employee();
 		modelAndView.addObject("employee", employee);
-		modelAndView.setViewName("employee-add-form");
+		modelAndView.setViewName("employee-form");
 		return modelAndView;
 	}
 
-	@GetMapping(value = "/updateForm/{id}")
+	@GetMapping(value = "/form/{id}")
 	public String getEmployeeUpdateFom(@PathVariable Long id, ModelMap modelMap) {
-		Optional<Employee> employee = employeeServiceImpl.getEmployee(id);
+		Optional<Employee> optionalEmployee = employeeServiceImpl.getEmployee(id);
+		Employee employee = optionalEmployee.get(); // optionalEmployee.get() - to get Employee from Optional<Employee>
 		// supports the use of put method from java.util.Map interface
-		modelMap.put("employee", employee);
-		return "employee-edit-form";
+		modelMap.put("employee", employee); 
+		return "employee-form";
 	}
 
 	@PostMapping(value = "")
 	public String saveEmployee(@Valid @ModelAttribute Employee employee, BindingResult bindingResult) {
-		if (bindingResult.hasErrors() && employee.getId() != null) {
-			return "employee-edit-form";
-		} else if (bindingResult.hasErrors()) {
-			return "employee-add-form";
+		if (bindingResult.hasErrors()) {
+			return "employee-form";
 		} else {
 			employeeServiceImpl.saveEmployee(employee);
 			return "redirect:/ems/employee/list";
