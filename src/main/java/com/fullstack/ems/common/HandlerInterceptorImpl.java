@@ -8,7 +8,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 @Component
-public class EmsInterceptor implements HandlerInterceptor {
+public class HandlerInterceptorImpl implements HandlerInterceptor {
    @Override
    public boolean preHandle
       (HttpServletRequest request, HttpServletResponse response, Object handler) 

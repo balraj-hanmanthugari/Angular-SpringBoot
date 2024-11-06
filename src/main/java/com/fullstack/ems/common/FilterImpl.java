@@ -12,7 +12,7 @@ import jakarta.servlet.ServletRequest;
 import jakarta.servlet.ServletResponse;
 
 @Component
-public class EmsFilter implements Filter {
+public class FilterImpl implements Filter {
    @Override
    public void destroy() {}
 
