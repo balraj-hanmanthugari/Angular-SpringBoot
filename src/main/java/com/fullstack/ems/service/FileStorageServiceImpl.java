@@ -16,49 +16,45 @@ import com.fullstack.ems.repository.FileStorageRepository;
 
 @Service
 public class FileStorageServiceImpl implements FileStorageService {
-	
+
 	private String FileSystemUrl = Constants.FILE_PATH_URL;
-	
+
 	@Autowired
 	private FileStorageRepository fileStorageRepository;
-	
+
 	public String uploadImageToDataBase(MultipartFile file) throws IOException {
-        FileData imageData = fileStorageRepository.save(FileData.builder()
-        		.name(file.getOriginalFilename())
-        		.type(file.getContentType())
-        		.imageData(FileDataUtils.compressImage(file.getBytes())).build());
-        if (imageData != null) {
-            return "file uploaded successfully : " + file.getOriginalFilename();
-        }
-        return null;
-    }
+		FileData imageData = fileStorageRepository.save(FileData.builder().name(file.getOriginalFilename())
+				.type(file.getContentType()).imageData(FileDataUtils.compressImage(file.getBytes())).build());
+		if (imageData != null) {
+			return "file uploaded successfully : " + file.getOriginalFilename();
+		}
+		return null;
+	}
 
-    public byte[] downloadImageFromDatabase(Long id){
-        Optional<FileData> dbImageData = fileStorageRepository.findById(id);
-        return FileDataUtils.decompressImage(dbImageData.get().getImageData());
-    }
-    
-    public String uploadFileToFileSystem(MultipartFile file) throws IOException {
-        String filePath= FileSystemUrl + file.getOriginalFilename();
+	public byte[] downloadImageFromDatabase(Long id) {
+		Optional<FileData> dbImageData = fileStorageRepository.findById(id);
+		return FileDataUtils.decompressImage(dbImageData.get().getImageData());
+	}
 
-        FileData fileData= fileStorageRepository.save(FileData.builder()
-                .name(file.getOriginalFilename())
-                .type(file.getContentType())
-                .filePath(filePath).build());
+	public String uploadFileToFileSystem(MultipartFile file) throws IOException {
+		String filePath = FileSystemUrl + file.getOriginalFilename();
 
-        file.transferTo(new File(filePath));
+		FileData fileData = fileStorageRepository.save(FileData.builder().name(file.getOriginalFilename())
+				.type(file.getContentType()).filePath(filePath).build());
 
-        if (fileData != null) {
-            return "file uploaded successfully : " + filePath;
-        }
-        return null;
-    }
+		file.transferTo(new File(filePath));
 
-    public byte[] downloadFileFromFileSystem(Long fileId) throws IOException {
-        Optional<FileData> fileData = fileStorageRepository.findById(fileId);
-        String filePath=fileData.get().getFilePath();
-        byte[] images = Files.readAllBytes(new File(filePath).toPath());
-        return images;
-    }
-    
+		if (fileData != null) {
+			return "file uploaded successfully : " + filePath;
+		}
+		return null;
+	}
+
+	public byte[] downloadFileFromFileSystem(Long fileId) throws IOException {
+		Optional<FileData> fileData = fileStorageRepository.findById(fileId);
+		String filePath = fileData.get().getFilePath();
+		byte[] images = Files.readAllBytes(new File(filePath).toPath());
+		return images;
+	}
+
 }

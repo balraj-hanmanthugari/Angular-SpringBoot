@@ -15,8 +15,8 @@ public interface TeacherService {
 	Teacher updateTeacher(Long id, Teacher college);
 
 	void deleteTeacher(Long id);
-	
+
 	String getSubjects(Long id);
-	
+
 	String getSubjects();
 }

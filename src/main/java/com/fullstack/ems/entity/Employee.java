@@ -8,6 +8,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "Employees")
@@ -16,6 +18,8 @@ public class Employee {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
+	@NotEmpty
+	@Size(max = 30)
 	@Column(name = "first_name")
 	private String firstName;
 

@@ -29,7 +29,7 @@ import com.fullstack.ems.service.TeacherServiceImpl;
 public class TeacherController {
 	@Autowired
 	private TeacherServiceImpl teacherServiceImpl;
-	
+
 	@Autowired
 	private FileStorageServiceImpl fileStorageServiceImpl;
 
@@ -63,44 +63,45 @@ public class TeacherController {
 		teacherServiceImpl.deleteTeacher(id);
 		return;
 	}
-	
-	//Uses Rest Template
+
+	// Uses Rest Template
 	@GetMapping(value = "/teacher/{id}/subject")
 	@ResponseStatus(HttpStatus.OK)
 	public String getSubjects(@PathVariable Long id) {
 		return teacherServiceImpl.getSubjects(id);
 	}
-	
-	//Uses Web Client
+
+	// Uses Web Client
 	@GetMapping(value = "/teacher/subject")
 	@ResponseStatus(HttpStatus.OK)
 	public String getSubjects() {
 		return teacherServiceImpl.getSubjects();
 	}
-	
+
 	@PostMapping(value = "/teacher/image")
 	@ResponseStatus(HttpStatus.OK)
-	public String uploadImage(@RequestParam("image")MultipartFile file) throws IOException {
-		return fileStorageServiceImpl.uploadImageToDataBase(file);
+	public String uploadImage(@RequestParam("image") MultipartFile image) throws IOException {
+		return fileStorageServiceImpl.uploadImageToDataBase(image);
 	}
 
-	@GetMapping(value = "teacher/image/{fileId}", produces = MediaType.IMAGE_PNG_VALUE)
+	@GetMapping(value = "teacher/image/{imageId}", produces = MediaType.IMAGE_PNG_VALUE)
 	@ResponseStatus(HttpStatus.OK)
-	public @ResponseBody byte[] downloadImage(@PathVariable Long fileId){
-		byte[] imageBytes = fileStorageServiceImpl.downloadImageFromDatabase(fileId);
+	public @ResponseBody byte[] downloadImage(@PathVariable Long imageId) {
+		byte[] imageBytes = fileStorageServiceImpl.downloadImageFromDatabase(imageId);
 		return imageBytes;
 	}
-	
+
 	@PostMapping("/teacher/file")
-	public String uploadImageToFIleSystem(@RequestParam()MultipartFile file) throws IOException {
+	public String uploadImageToFIleSystem(@RequestParam() MultipartFile file) throws IOException {
 		String uploadImage = fileStorageServiceImpl.uploadFileToFileSystem(file);
 		return uploadImage;
 	}
 
-	@GetMapping("/teacher/file/{fileId}")
+	@GetMapping(value = "/teacher/file/{fileId}", produces = MediaType.IMAGE_PNG_VALUE)
+	@ResponseStatus(HttpStatus.OK)
 	public @ResponseBody byte[] downloadFileFromFileSystem(@PathVariable Long fileId) throws IOException {
-		byte[] fileData=fileStorageServiceImpl.downloadFileFromFileSystem(fileId);
-		return fileData;
+		byte[] fileDataBytes = fileStorageServiceImpl.downloadFileFromFileSystem(fileId);
+		return fileDataBytes;
 	}
 
 }

@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.AbstractEnvironment;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -19,14 +18,11 @@ public class TeacherServiceImpl implements TeacherService {
 	@Autowired
 	private AbstractEnvironment environment;// all the environment variables
 
-	@Value("${ems}") //only one environment variable
-	private String emsUrl;
-	
 	String subjectUrl = Constants.SUBJECT_URL;
-	
+
 	@Autowired
 	private TeacherRepository teacherRepository;
-	
+
 	private RestTemplate restTemplate = new RestTemplate();
 
 	@Override
@@ -56,15 +52,16 @@ public class TeacherServiceImpl implements TeacherService {
 		return;
 	}
 
-	//Using rest template to make api call 
+	// Using rest template to make api call
 	public String getSubjects(Long id) {
-		return restTemplate.getForEntity(environment.getProperty("ems")+subjectUrl, String.class).getBody();
-		//return restTemplate.getForEntity("http://localhost:8080/ems/v1/subject", String.class).getBody();
+		return restTemplate.getForEntity(environment.getProperty("ems") + subjectUrl, String.class).getBody();
+		// return restTemplate.getForEntity("http://localhost:8080/ems/v1/subject",
+		// String.class).getBody();
 	}
-	
-	//Using Web Client to make api call 
+
+	// Using Web Client to make api call
 	public String getSubjects() {
-		WebClient webClient = WebClient.builder().baseUrl(emsUrl).build();
+		WebClient webClient = WebClient.builder().baseUrl(environment.getProperty("ems")).build();
 		return webClient.get().uri(subjectUrl).retrieve().bodyToMono(String.class).block();
 	}
 
