@@ -3,6 +3,8 @@ package com.fullstack.ems.controller;
 import java.util.List;
 import java.util.Optional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,9 +29,18 @@ import jakarta.validation.Valid;
 public class EmployeeController {
 	@Autowired
 	private EmployeeServiceImpl employeeServiceImpl;
+	
+	final Logger logger = LoggerFactory.getLogger(EmployeeController.class);
+	
+	@GetMapping(value = "/login")
+	public String loginEmployeeForm(Model model) {
+		logger.info("in employee login form method");
+		return "employee-login";
+	}
 
 	@GetMapping(value = "/list")
 	public String getEmployees(Model model) {
+		logger.info("in employee list method");
 		List<Employee> employeesList = employeeServiceImpl.getEmployees();
 		model.addAttribute("employeeList", employeesList);
 		return "employee-list";
@@ -42,6 +53,16 @@ public class EmployeeController {
 		modelAndView.setViewName("employee-form");
 		return modelAndView;
 	}
+	
+	@PostMapping(value = "/form")
+	public String saveEmployee(@Valid @ModelAttribute Employee employee, BindingResult bindingResult) {
+		if (bindingResult.hasErrors()) {
+			return "employee-form";
+		} else {
+			employeeServiceImpl.saveEmployee(employee);
+			return "redirect:/ems/employee/list";
+		}
+	}
 
 	@GetMapping(value = "/form/{id}")
 	public String getEmployeeUpdateFom(@PathVariable Long id, ModelMap modelMap) {
@@ -52,8 +73,8 @@ public class EmployeeController {
 		return "employee-form";
 	}
 
-	@PostMapping(value = "")
-	public String saveEmployee(@Valid @ModelAttribute Employee employee, BindingResult bindingResult) {
+	@PostMapping(value = "/form/{id}")
+	public String updateEmployee(@Valid @ModelAttribute Employee employee, BindingResult bindingResult) {
 		if (bindingResult.hasErrors()) {
 			return "employee-form";
 		} else {

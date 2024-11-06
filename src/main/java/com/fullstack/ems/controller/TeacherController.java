@@ -25,6 +25,9 @@ import com.fullstack.ems.entity.Teacher;
 import com.fullstack.ems.service.FileStorageServiceImpl;
 import com.fullstack.ems.service.TeacherServiceImpl;
 
+import jakarta.mail.MessagingException;
+import jakarta.mail.internet.AddressException;
+
 @RestController
 @RequestMapping("/ems/v1")
 public class TeacherController {
@@ -64,7 +67,7 @@ public class TeacherController {
 		teacherServiceImpl.deleteTeacher(id);
 		return;
 	}
-	
+
 	// Uses Rest Template
 	@GetMapping(value = "/teacher/{id}/subject")
 	@ResponseStatus(HttpStatus.OK)
@@ -83,7 +86,7 @@ public class TeacherController {
 
 	@PostMapping(value = "/teacher/image")
 	@ResponseStatus(HttpStatus.OK)
-	public String uploadImage(@RequestParam("image") MultipartFile image) throws IOException {
+	public String uploadImage(@RequestParam() MultipartFile image) throws IOException {
 		return fileStorageServiceImpl.uploadImageToDataBase(image);
 	}
 
@@ -105,6 +108,12 @@ public class TeacherController {
 	public @ResponseBody byte[] downloadFileFromFileSystem(@PathVariable Long fileId) throws IOException {
 		byte[] fileDataBytes = fileStorageServiceImpl.downloadFileFromFileSystem(fileId);
 		return fileDataBytes;
+	}
+
+	@GetMapping(value = "/teacher/sendMail")
+	public String sendEmail() throws AddressException, MessagingException, IOException {
+		teacherServiceImpl.sendMail();
+		return "Email sent successfully";
 	}
 
 }

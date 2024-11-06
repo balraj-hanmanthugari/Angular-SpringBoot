@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<html lang="en" xmlns:th="https://www.thymeleaf.org"
+				xmlns:sec = "http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 
 <head>
 	<meta charset="ISO-8859-1">
@@ -9,7 +10,11 @@
 </head>
 
 <body>
-	<div align="center">
+	<div class="employee-list">
+		<h1 th:inline="text">Hello <span sec:authentication="name"></span>!</h1> 
+		<form th:action = "@{/logout}" method = "Get">
+			<input type = "submit" value = "Sign Out"/>
+		</form>
 		<h1 th:text="#{ems.form.title}"></h1>
 		<a th:href="@{/ems/employee/form}" th:text="#{ems.form.add-employee}"></a>
 		<table border="1">
