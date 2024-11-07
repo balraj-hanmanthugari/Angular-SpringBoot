@@ -9,11 +9,12 @@
 </head>
 
 <body>
-	<div class="employee-form">
-		<h1 th:inline="text">Hello <span sec:authentication="name"></span>!</h1> 
-		<form th:action = "@{/logout}" method = "Get">
-			<input type = "submit" value = "Sign Out"/>
-		</form>
+	<div>
+		<h1 th:inline="text">Hello <span sec:authentication="name"></span>!
+			<form th:action = "@{/logout}" method = "Get">
+				<input type = "submit" value = "Sign Out"/>
+			</form>
+		</h1> 
 		<h1>Employee Form</h1>
 		<hr>
 		<form action="#" th:object="${employee}" method="POST">

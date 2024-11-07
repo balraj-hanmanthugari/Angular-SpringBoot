@@ -10,32 +10,35 @@
 </head>
 
 <body>
-	<div class="employee-list">
-		<h1 th:inline="text">Hello <span sec:authentication="name"></span>!</h1> 
-		<form th:action = "@{/logout}" method = "Get">
-			<input type = "submit" value = "Sign Out"/>
-		</form>
+	<div>
+		<h1 th:inline="text">Hello <span sec:authentication="name"></span>! 
+			<form th:action = "@{/logout}" method = "Get">
+				<input type = "submit" value = "Sign Out"/>
+			</form>
+		</h1> 
 		<h1 th:text="#{ems.form.title}"></h1>
 		<a th:href="@{/ems/employee/form}" th:text="#{ems.form.add-employee}"></a>
-		<table border="1">
-			<thead>
-				<tr>
-					<th th:text="#{ems.form.first-name}"></th>
-					<th th:text="#{ems.form.last-name}"></th>
-					<th th:text="#{ems.form.actions}"></th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr th:each="employee : ${employeeList}">
-					<td th:text="${employee.firstName}"></td>
-					<td th:text="${employee.lastName}"></td>
-					<td>
-						<a th:href="@{/ems/employee/form/{id}(id=${employee.id})}" th:text="#{ems.form.update}"></a>
-						<a th:href="@{/ems/employee/delete/{id}(id=${employee.id})}" th:text="#{ems.form.delete}"></a>
-					</td>
-				</tr>
-			</tbody>
-		</table>
+		<div class="employee-list-table">
+			<table border="1">
+				<thead>
+					<tr>
+						<th th:text="#{ems.form.first-name}"></th>
+						<th th:text="#{ems.form.last-name}"></th>
+						<th th:text="#{ems.form.actions}"></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="employee : ${employeeList}">
+						<td th:text="${employee.firstName}"></td>
+						<td th:text="${employee.lastName}"></td>
+						<td>
+							<a th:href="@{/ems/employee/form/{id}(id=${employee.id})}" th:text="#{ems.form.update}"></a>
+							<a th:href="@{/ems/employee/delete/{id}(id=${employee.id})}" th:text="#{ems.form.delete}"></a>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
 	</div>
 </body>
 

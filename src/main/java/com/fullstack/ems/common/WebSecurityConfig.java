@@ -33,10 +33,11 @@ public class WebSecurityConfig {
 	protected SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		return http.csrf(AbstractHttpConfigurer::disable)
 				.authorizeHttpRequests(
-						request -> request.requestMatchers("/ems/teacher").permitAll().requestMatchers("/ems/student")
-								.permitAll().requestMatchers("/ems/subject").permitAll().anyRequest().authenticated())
-				.formLogin(form -> form.loginPage("/ems/employee/login").defaultSuccessUrl("/ems/employee/list", true)
-						.permitAll())
+						request -> request.requestMatchers("/actuator/health").permitAll().
+										   requestMatchers("/ems/v1/teacher").permitAll().
+										   requestMatchers("/ems/v1/student").permitAll().
+										   requestMatchers("/ems/v1/subject").permitAll().anyRequest().authenticated())
+				.formLogin(form -> form.loginPage("/ems/employee/login").defaultSuccessUrl("/ems/employee/list", true).permitAll())
 				.logout(config -> config.logoutSuccessUrl("/ems/employee/login")).build();
 	}
 }

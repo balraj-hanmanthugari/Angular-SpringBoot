@@ -3,12 +3,10 @@
 
 <head>
 	<title>Employee Login </title>
-	<link rel="stylesheet" href="/css/styles.css" />
-	<script type="text/javascript" src="/js/scripts.js"></script>
 </head>
 
 <body>
-	<div class="employee-login">
+	<div>
 		<h2>Employee Login </h2>
 		<div th:if="${param.error}">
 			Invalid username and password.
@@ -18,12 +16,12 @@
 		</div>
 
 		<form th:action="@{/ems/employee/login}" method="post">
-			<div class="text-field">
-				<label>User Name : </label>
+			<div style="margin-bottom: 10px;">
+				<label style="display: inline-block; width: 100px; text-align: right;">User Name : </label>
 				<input type="text" name="username" />
 			</div>
-			<div class="text-field">
-				<label>Password :</label>
+			<div style="margin-bottom: 10px;">
+				<label style="display: inline-block; width: 100px; text-align: right;">Password :</label>
 				<input type="password" name="password" /> 
 			</div>
 			<div>
