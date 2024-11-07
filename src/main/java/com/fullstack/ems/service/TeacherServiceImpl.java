@@ -8,6 +8,10 @@ import java.util.Properties;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.AbstractEnvironment;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -42,8 +46,9 @@ public class TeacherServiceImpl implements TeacherService {
 	private RestTemplate restTemplate = new RestTemplate();
 
 	@Override
-	public List<Teacher> getTeachers() {
-		return teacherRepository.findAll();
+	public Page<Teacher> getTeachers() {
+		Pageable firstPageWithTwoElements = PageRequest.of(0, 3, Sort.by("name"));
+		return teacherRepository.findAll(firstPageWithTwoElements);
 	}
 
 	@Override
