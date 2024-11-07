@@ -22,6 +22,7 @@ public class FileStorageServiceImpl implements FileStorageService {
 	@Autowired
 	private FileStorageRepository fileStorageRepository;
 
+	@Override
 	public String uploadImageToDataBase(MultipartFile file) throws IOException {
 		FileData imageData = fileStorageRepository.save(FileData.builder().name(file.getOriginalFilename())
 				.type(file.getContentType()).imageData(FileDataUtils.compressImage(file.getBytes())).build());
@@ -31,11 +32,13 @@ public class FileStorageServiceImpl implements FileStorageService {
 		return null;
 	}
 
+	@Override
 	public byte[] downloadImageFromDatabase(Long id) {
 		Optional<FileData> dbImageData = fileStorageRepository.findById(id);
 		return FileDataUtils.decompressImage(dbImageData.get().getImageData());
 	}
 
+	@Override
 	public String uploadFileToFileSystem(MultipartFile file) throws IOException {
 		String filePath = FileSystemUrl + file.getOriginalFilename();
 
@@ -50,6 +53,7 @@ public class FileStorageServiceImpl implements FileStorageService {
 		return null;
 	}
 
+	@Override
 	public byte[] downloadFileFromFileSystem(Long fileId) throws IOException {
 		Optional<FileData> fileData = fileStorageRepository.findById(fileId);
 		String filePath = fileData.get().getFilePath();

@@ -12,7 +12,7 @@ public class EmsApplication extends SpringBootServletInitializer {
 	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
 		return application.sources(EmsApplication.class);
 	}
-	
+
 	public static void main(String[] args) {
 		SpringApplication.run(EmsApplication.class, args);
 	}

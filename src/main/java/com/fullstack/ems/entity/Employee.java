@@ -21,7 +21,7 @@ public class Employee {
 
 	@NotEmpty
 	@NotNull
-	@Size(min=2, max = 30)
+	@Size(min = 2, max = 30)
 	@Column(name = "first_name")
 	private String firstName;
 

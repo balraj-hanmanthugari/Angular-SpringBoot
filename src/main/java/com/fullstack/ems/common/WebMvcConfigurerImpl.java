@@ -19,15 +19,15 @@ public class WebMvcConfigurerImpl implements WebMvcConfigurer {
 	@Autowired
 	HandlerInterceptorImpl handlerInterceptorImpl;
 
-    @Bean
-    LocaleResolver localeResolver() {
+	@Bean
+	LocaleResolver localeResolver() {
 		SessionLocaleResolver sessionLocaleResolver = new SessionLocaleResolver();
 		sessionLocaleResolver.setDefaultLocale(Locale.US);
 		return sessionLocaleResolver;
 	}
 
-    @Bean
-    LocaleChangeInterceptor localeChangeInterceptor() {
+	@Bean
+	LocaleChangeInterceptor localeChangeInterceptor() {
 		LocaleChangeInterceptor localeChangeInterceptor = new LocaleChangeInterceptor();
 		localeChangeInterceptor.setParamName("language");
 		return localeChangeInterceptor;
@@ -38,10 +38,10 @@ public class WebMvcConfigurerImpl implements WebMvcConfigurer {
 		registry.addInterceptor(localeChangeInterceptor());
 		registry.addInterceptor(handlerInterceptorImpl);
 	}
-	
+
 	@Override
 	public void addCorsMappings(CorsRegistry registry) {
 		registry.addMapping("/products").allowedOrigins("http://localhost:8080");
 	}
-	
+
 }

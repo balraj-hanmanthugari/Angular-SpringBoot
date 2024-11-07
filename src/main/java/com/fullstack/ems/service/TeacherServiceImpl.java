@@ -69,6 +69,7 @@ public class TeacherServiceImpl implements TeacherService {
 	}
 
 	// Using rest template to make api call
+	@Override
 	public String getSubjects(Long id) {
 		return restTemplate.getForEntity(environment.getProperty("ems") + subjectUrl, String.class).getBody();
 		// return restTemplate.getForEntity("http://localhost:8080/ems/v1/subject",
@@ -76,43 +77,45 @@ public class TeacherServiceImpl implements TeacherService {
 	}
 
 	// Using Web Client to make api call
+	@Override
 	public String getSubjects() {
 		WebClient webClient = WebClient.builder().baseUrl(environment.getProperty("ems")).build();
 		return webClient.get().uri(subjectUrl).retrieve().bodyToMono(String.class).block();
 	}
-	
+
 	public void sendMail() throws AddressException, MessagingException, IOException {
-	      Properties props = new Properties();
-	      props.put("mail.smtp.auth", "true");
-	      props.put("mail.smtp.starttls.enable", "true");
-	      props.put("mail.smtp.host", "smtp.gmail.com");
-	      props.put("mail.smtp.port", "587");
+		Properties props = new Properties();
+		props.put("mail.smtp.auth", "true");
+		props.put("mail.smtp.starttls.enable", "true");
+		props.put("mail.smtp.host", "smtp.gmail.com");
+		props.put("mail.smtp.port", "587");
 
-	      Session session = Session.getInstance(props, new Authenticator() {
-	         protected PasswordAuthentication getPasswordAuthentication() {
-	            return new PasswordAuthentication("balraj.hanmanthugari@gmail.com", "BalMar@2024");
-	         }
-	      });
-	      
-	      Message msg = new MimeMessage(session);
-	      msg.setFrom(new InternetAddress("balraj.hanmanthugari@gmail.com", false));
-	      msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse("balraj.hanmanthugari@gmail.com"));
-	      msg.setSubject("balraj email");
-	      msg.setContent("balraj email", "text/html");
-	      msg.setSentDate(new Date());
+		Session session = Session.getInstance(props, new Authenticator() {
+			@Override
+			protected PasswordAuthentication getPasswordAuthentication() {
+				return new PasswordAuthentication("balraj.hanmanthugari@gmail.com", "BalMar@2024");
+			}
+		});
 
-	      MimeBodyPart messageBodyPart = new MimeBodyPart();
-	      messageBodyPart.setContent("balraj email", "text/html");
-	      
-	      MimeBodyPart attachPart = new MimeBodyPart();
-	      attachPart.attachFile("C:/Users/HI/Desktop/Controller-RestController.png");
-	      
-	      Multipart multipart = new MimeMultipart();
-	      multipart.addBodyPart(messageBodyPart);
-	      multipart.addBodyPart(attachPart);
-	      
-	      msg.setContent(multipart);
-	      Transport.send(msg);   
-	   }
+		Message msg = new MimeMessage(session);
+		msg.setFrom(new InternetAddress("balraj.hanmanthugari@gmail.com", false));
+		msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse("balraj.hanmanthugari@gmail.com"));
+		msg.setSubject("balraj email");
+		msg.setContent("balraj email", "text/html");
+		msg.setSentDate(new Date());
+
+		MimeBodyPart messageBodyPart = new MimeBodyPart();
+		messageBodyPart.setContent("balraj email", "text/html");
+
+		MimeBodyPart attachPart = new MimeBodyPart();
+		attachPart.attachFile("C:/Users/HI/Desktop/Controller-RestController.png");
+
+		Multipart multipart = new MimeMultipart();
+		multipart.addBodyPart(messageBodyPart);
+		multipart.addBodyPart(attachPart);
+
+		msg.setContent(multipart);
+		Transport.send(msg);
+	}
 
 }

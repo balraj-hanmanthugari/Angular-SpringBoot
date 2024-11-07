@@ -29,9 +29,9 @@ import jakarta.validation.Valid;
 public class EmployeeController {
 	@Autowired
 	private EmployeeServiceImpl employeeServiceImpl;
-	
+
 	final Logger logger = LoggerFactory.getLogger(EmployeeController.class);
-	
+
 	@GetMapping(value = "/login")
 	public String loginEmployeeForm(Model model) {
 		logger.info("in employee login form method");
@@ -53,7 +53,7 @@ public class EmployeeController {
 		modelAndView.setViewName("employee-form");
 		return modelAndView;
 	}
-	
+
 	@PostMapping(value = "/form")
 	public String saveEmployee(@Valid @ModelAttribute Employee employee, BindingResult bindingResult) {
 		if (bindingResult.hasErrors()) {
@@ -69,7 +69,7 @@ public class EmployeeController {
 		Optional<Employee> optionalEmployee = employeeServiceImpl.getEmployee(id);
 		Employee employee = optionalEmployee.get(); // optionalEmployee.get() - to get Employee from Optional<Employee>
 		// supports the use of put method from java.util.Map interface
-		modelMap.put("employee", employee); 
+		modelMap.put("employee", employee);
 		return "employee-form";
 	}
 
