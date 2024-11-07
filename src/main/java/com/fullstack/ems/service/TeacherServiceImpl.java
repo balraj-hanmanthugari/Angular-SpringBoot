@@ -93,13 +93,13 @@ public class TeacherServiceImpl implements TeacherService {
 		Session session = Session.getInstance(props, new Authenticator() {
 			@Override
 			protected PasswordAuthentication getPasswordAuthentication() {
-				return new PasswordAuthentication("balraj.hanmanthugari@gmail.com", "BalMar@2024");
+				return new PasswordAuthentication("i@gmail.com", "i");
 			}
 		});
 
 		Message msg = new MimeMessage(session);
 		msg.setFrom(new InternetAddress("balraj.hanmanthugari@gmail.com", false));
-		msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse("balraj.hanmanthugari@gmail.com"));
+		msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse("i@gmail.com"));
 		msg.setSubject("balraj email");
 		msg.setContent("balraj email", "text/html");
 		msg.setSentDate(new Date());
