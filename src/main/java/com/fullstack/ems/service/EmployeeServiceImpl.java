@@ -44,12 +44,6 @@ public class EmployeeServiceImpl implements EmployeeService {
 		if (employee.getLastName() == null) {
 			employee.setLastName(fetchedEmployee.getLastName());
 		}
-		if (employee.getDateOfBirth() == null) {
-			employee.setDateOfBirth(fetchedEmployee.getDateOfBirth());
-		}
-		if (employee.getSalary() == null) {
-			employee.setSalary(fetchedEmployee.getSalary());
-		}
 		employee.setId(id);
 		return employeeRepository.save(employee);
 	}

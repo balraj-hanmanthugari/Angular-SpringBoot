@@ -11,9 +11,9 @@ import com.fullstack.ems.entity.Teacher;
 
 @Repository
 public interface TeacherRepository extends JpaRepository<Teacher, Long> {
-	@Query(value = "SELECT * FROM Teacher u WHERE u.id = :id", nativeQuery = true) //JPQL Query
+	@Query(value = "SELECT * FROM Teacher u WHERE u.id = :id", nativeQuery = true) // JPQL Query
 	Optional<Teacher> findById(@Param("id") Long id);
-	
-	@Query("SELECT s FROM Student s ORDER BY :name") //JPQL Query
+
+	@Query("SELECT s FROM Student s ORDER BY :name") // JPQL Query
 	Optional<Teacher> findByName(@Param("name") String name);
 }

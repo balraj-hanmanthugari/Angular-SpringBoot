@@ -1,7 +1,5 @@
 package com.fullstack.ems.entity;
 
-import java.util.Date;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -11,7 +9,11 @@ import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "Employees")
 public class Employee {
@@ -27,17 +29,6 @@ public class Employee {
 
 	@Column(name = "last_name")
 	private String LastName;
-
-	@Column
-	private Date dateOfBirth;
-
-	@Column
-	private Double salary;
-
-	public Employee() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
 
 	public Long getId() {
 		return id;
@@ -63,19 +54,4 @@ public class Employee {
 		LastName = lastName;
 	}
 
-	public Date getDateOfBirth() {
-		return dateOfBirth;
-	}
-
-	public void setDateOfBirth(Date dateOfBirth) {
-		this.dateOfBirth = dateOfBirth;
-	}
-
-	public Double getSalary() {
-		return salary;
-	}
-
-	public void setSalary(Double salary) {
-		this.salary = salary;
-	}
 }
