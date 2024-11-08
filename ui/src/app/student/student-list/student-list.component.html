@@ -1,7 +1,9 @@
 <div>Student List</div>
 <ag-grid-angular 
-    style="width: 700px; height: 500px;" 
+    style="width: 750px; height: 500px;" 
     class="ag-theme-quartz"
-    [rowData]="rowData" 
-    [columnDefs]="columnDefs">
+    [columnDefs]="columnDefs" [rowData]="rowData" [rowSelection]="rowSelection" 
+    [pagination]="pagination"
+    [paginationPageSize]="paginationPageSize"
+    [paginationPageSizeSelector]="paginationPageSizeSelector">
 </ag-grid-angular>
