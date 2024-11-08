@@ -12,7 +12,7 @@ const routes: Routes = [
   },
   {
     path: ':id',
-    component: SubjectFormComponent
+    loadComponent: () => import('./subject-form/subject-form.component').then(c => c.SubjectFormComponent)
   }
 ];
 
