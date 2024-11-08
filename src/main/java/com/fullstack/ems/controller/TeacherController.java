@@ -110,12 +110,6 @@ public class TeacherController {
 		byte[] fileDataBytes = fileStorageServiceImpl.downloadFileFromFileSystem(fileId);
 		return fileDataBytes;
 	}
-	
-	@PostMapping(value = "/teacher/import")
-	@ResponseStatus(HttpStatus.OK)
-	public @ResponseBody String importFileUsingBatch(@RequestParam() MultipartFile file) {
-		return "Data imported succcessfully";
-	}
 
 	@GetMapping(value = "/teacher/sendMail")
 	public String sendEmail() throws AddressException, MessagingException, IOException {
