@@ -1,9 +1,13 @@
-<div class="main">
-    <div class="title">Employee Management System</div>
-    <nav class="nav">
-        <a class="button" routerLink="/student">Students</a> |
-        <a class="button" routerLink="/teacher">Teachers</a> |
-        <a class="button" routerLink="/subject">Subjects</a>
-    </nav>
-    <router-outlet />
+<div class="main-grid-container">
+    <div class="grid-header">
+        <div class="title">Enterprise Management System</div>
+    </div> 
+    <div class="grid-menu">
+        <nav class="nav">
+            <a class="button" routerLink="/student">Students</a>
+            <a class="button" routerLink="/teacher">Teachers</a>
+            <a class="button" routerLink="/subject">Subjects</a>
+        </nav>
+    </div> 
+    <div class="grid-body"><router-outlet /></div> 
 </div>

@@ -1,9 +1,37 @@
-.main {
-    .title {
-        margin-bottom: 10px;
-        font-weight: bold;
+.main-grid-container {
+    display: grid;
+    grid-template-areas:
+        'header header header header header header'
+        'menu main main main main main';
+    gap: 10px;
+    padding: 10px;
+
+    .grid-header {
+        grid-area: header;
+        .title {
+            text-align: center;
+            margin-bottom: 10px;
+            font-weight: bold;
+            border-bottom: 1px solid black;
+        }
     }
-    .nav {
-        margin-bottom: 10px;
+
+    .grid-menu {
+        grid-area: menu;
+        background-color: grey;
+        width: 200px;
+        .nav {
+            a.button {
+                display: block;
+                margin-top: 20px;
+                margin-bottom: 20px;
+                margin-left: 20px;
+            }
+        }
     }
+
+    .grid-main {
+        grid-area: main;
+    }
+    
 }
