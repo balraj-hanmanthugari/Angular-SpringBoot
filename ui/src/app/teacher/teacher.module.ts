@@ -4,6 +4,7 @@ import { TeacherFormComponent } from './teacher-form/teacher-form.component';
 import { TeacherListComponent } from './teacher-list/teacher-list.component';
 import { TeacherService } from './teacher.service';
 import { RouterModule, Routes } from '@angular/router';
+import { AgGridAngular } from 'ag-grid-angular'; // Angular Data Grid Component
 
 const routes: Routes = [
   {
@@ -26,6 +27,7 @@ const routes: Routes = [
   ],
   imports: [
     CommonModule,
+    AgGridAngular,
     RouterModule.forChild(routes)
   ]
 })

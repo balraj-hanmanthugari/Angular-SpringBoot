@@ -4,6 +4,7 @@ import { SubjectFormComponent } from './subject-form/subject-form.component';
 import { SubjectListComponent } from './subject-list/subject-list.component';
 import { SubjectService } from './subject.service';
 import { RouterModule, Routes } from '@angular/router';
+import { AgGridAngular } from 'ag-grid-angular'; // Angular Data Grid Component
 
 const routes: Routes = [
   {
@@ -26,6 +27,7 @@ const routes: Routes = [
   ],
   imports: [
     CommonModule,
+    AgGridAngular,
     RouterModule.forChild(routes)
   ]
 })

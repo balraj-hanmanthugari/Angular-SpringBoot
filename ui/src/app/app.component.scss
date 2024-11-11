@@ -18,16 +18,8 @@
 
     .grid-menu {
         grid-area: menu;
-        background-color: grey;
+        background-color: lightgray;
         width: 200px;
-        .nav {
-            a.button {
-                display: block;
-                margin-top: 20px;
-                margin-bottom: 20px;
-                margin-left: 20px;
-            }
-        }
     }
 
     .grid-main {
