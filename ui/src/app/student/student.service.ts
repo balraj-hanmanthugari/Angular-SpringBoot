@@ -9,7 +9,7 @@ const baseUrl = 'http://localhost:8080/ems/v1/student';
   providedIn: 'any'
 })
 export class StudentService {
-  
+
 
   constructor(private http: HttpClient) { }
 

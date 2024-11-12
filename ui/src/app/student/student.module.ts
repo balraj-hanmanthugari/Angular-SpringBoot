@@ -5,6 +5,7 @@ import { StudentListComponent } from './student-list/student-list.component';
 import { StudentService } from './student.service';
 import { RouterModule, Routes } from '@angular/router';
 import { AgGridAngular } from 'ag-grid-angular'; // Angular Data Grid Component
+import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
 const routes: Routes = [
@@ -13,7 +14,11 @@ const routes: Routes = [
     component: StudentListComponent
   },
   {
-    path: ':id',
+    path: 'form',
+    component: StudentFormComponent
+  },
+  {
+    path: 'form/:id',
     component: StudentFormComponent
   }
 ];
@@ -23,12 +28,13 @@ const routes: Routes = [
     StudentFormComponent,
     StudentListComponent
   ],
-  providers: [ 
-    StudentService 
+  providers: [
+    StudentService
   ],
   imports: [
     CommonModule,
     AgGridAngular,
+    FormsModule,
     HttpClientModule,
     RouterModule.forChild(routes)
   ]

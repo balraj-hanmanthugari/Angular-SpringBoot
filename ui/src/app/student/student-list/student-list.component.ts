@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { StudentService } from '../student.service';
-import { GridReadyEvent, SelectionChangedEvent } from 'ag-grid-community';
+import { SelectionChangedEvent } from 'ag-grid-community';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-student-list',
@@ -15,7 +16,8 @@ export class StudentListComponent implements OnInit {
   deleteLabel: String = "Delete";
   deleteDisabled: Boolean = true;
 
-  constructor(private studentService: StudentService) {
+  constructor(private studentService: StudentService, private route: ActivatedRoute,
+    private router: Router) {
 
   }
 
@@ -23,27 +25,26 @@ export class StudentListComponent implements OnInit {
     //this.getStudentList();
   }
 
-  columnDefs: any = [
-    { headerName: 'First Name', field: 'firstName', flex: 1, filter: true },
-    { headerName: 'Last Name', field: 'lastName', flex: 1 }
-  ];
-
-  rowSelection: any = {
-    mode: 'multiRow'
+  studentListConfig: any = {
+    columnDefs: [
+      { headerName: 'First Name', field: 'firstName', flex: 1, filter: true },
+      { headerName: 'Last Name', field: 'lastName', flex: 1 }
+    ],
+    rowSelection: {
+      mode: 'multiRow'
+    },
+    pagination: true,
+    paginationPageSize: 200,
+    paginationPageSizeSelector: [200, 500, 1000],
+    rowData: []
   };
 
-  pagination = true;
-  paginationPageSize = 200;
-  paginationPageSizeSelector = [200, 500, 1000];
-
-  rowData: any = [];
-
-  selectedRows:any = [];
+  selectedRows: any = [];
 
   getStudentList(): void {
     this.studentService.getAll().subscribe({
       next: (data) => {
-        this.rowData = data;
+        this.studentListConfig.rowData = data;
       },
       error: (e) => console.error(e)
     });
@@ -55,26 +56,22 @@ export class StudentListComponent implements OnInit {
 
   onSelectionChanged(event: SelectionChangedEvent) {
     this.selectedRows = event.api.getSelectedNodes();
-    this.editDisabled=this.selectedRows.length === 1?false:true;
-    this.deleteDisabled=this.selectedRows.length ===1?false:true;
-  }
-
-  addStudent() {
-    console.log("create");
+    this.editDisabled = this.selectedRows.length === 1 ? false : true;
+    this.deleteDisabled = this.selectedRows.length === 1 ? false : true;
   }
 
   editStudent() {
-    console.log(this.selectedRows);
+    if (this.selectedRows[0]?.data.id)
+      this.router.navigate(['/student/form', this.selectedRows[0]?.data.id, this.selectedRows[0]?.data]);
   }
 
-  onCellClicked(event:any) {
+  onCellClicked(event: any) {
     console.log("edit");
   }
 
   deleteSelectedStudent() {
     this.studentService.delete(this.selectedRows[0]?.data.id).subscribe({
       next: (data) => {
-        console.log(data);
         this.getStudentList();
       },
       error: (e) => console.error(e)

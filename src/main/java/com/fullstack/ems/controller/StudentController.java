@@ -22,6 +22,7 @@ import com.fullstack.ems.service.StudentServiceImpl;
 
 @RestController
 @RequestMapping("/ems/v1")
+@CrossOrigin(origins = "http://localhost:4200")
 public class StudentController {
 	@Autowired
 	private StudentServiceImpl studentServiceImpl;
@@ -58,7 +59,6 @@ public class StudentController {
 		return studentServiceImpl.updateStudentPartial(id, student);
 	}
 	
-	@CrossOrigin(origins = "http://localhost:4200")
 	@DeleteMapping(value = "/student/{id}")
 	@ResponseStatus(HttpStatus.OK)
 	public void deletStudent(@PathVariable Long id) {
