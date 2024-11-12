@@ -31,7 +31,7 @@ export class StudentListComponent implements OnInit {
       { headerName: 'Last Name', field: 'lastName', flex: 1 }
     ],
     rowSelection: {
-      mode: 'multiRow'
+      mode: 'singleRow'
     },
     pagination: true,
     paginationPageSize: 200,
