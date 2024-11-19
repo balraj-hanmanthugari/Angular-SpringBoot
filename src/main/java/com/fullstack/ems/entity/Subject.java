@@ -3,6 +3,8 @@ package com.fullstack.ems.entity;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.springframework.hateoas.RepresentationModel;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -17,7 +19,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "Subject")
-public class Subject {
+public class Subject extends RepresentationModel<Subject>{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;

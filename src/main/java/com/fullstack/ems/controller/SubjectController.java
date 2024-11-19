@@ -3,8 +3,20 @@ package com.fullstack.ems.controller;
 import java.util.List;
 import java.util.Optional;
 
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
+
 import org.springframework.beans.factory.annotation.Autowired;
+
+import org.springframework.hateoas.CollectionModel;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.IanaLinkRelations;
+import org.springframework.hateoas.Link;
+import org.springframework.hateoas.Affordance;
+
+import org.springframework.hateoas.RepresentationModel;
+import org.springframework.hateoas.mediatype.hal.HalModelBuilder;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,14 +38,31 @@ public class SubjectController {
 
 	@GetMapping(value = "/subject")
 	@ResponseStatus(HttpStatus.OK)
-	public List<Subject> getSubjects() {
-		return subjectServiceImpl.getSubjects();
+	public RepresentationModel<?> getSubjects() {
+		List<Subject> subjectList = subjectServiceImpl.getSubjects();
+		subjectList.forEach(subject -> {
+			Link itemLink = Link.of("/ems/v1/subject/{id}")
+								.expand(subject.getId());
+			subject.add(itemLink);
+		});
+		
+		Link nodeLink = Link.of("/ems/v1/subject");
+		HalModelBuilder halModelBuilder = HalModelBuilder.halModelOf(CollectionModel.of(subjectList));
+		halModelBuilder.link(nodeLink.withRel(IanaLinkRelations.SELF));
+		return halModelBuilder.build();
 	}
 
 	@GetMapping(value = "/subject/{id}")
 	@ResponseStatus(HttpStatus.OK)
-	public Optional<Subject> getSubject(@PathVariable Long id) {
-		return subjectServiceImpl.getSubject(id);
+	public RepresentationModel<?> getSubject(@PathVariable Long id) {
+		Subject subject = subjectServiceImpl.getSubject(id).get();
+		
+		Link nodeLink = Link.of("/ems/v1/subject/{id}");
+		nodeLink.expand(subject.getId());
+		
+		HalModelBuilder halModelBuilder = HalModelBuilder.halModelOf(EntityModel.of(subject));
+		halModelBuilder.link(nodeLink.withRel(IanaLinkRelations.SELF));
+		return halModelBuilder.build();
 	}
 
 	@PostMapping(value = "/subject")
@@ -51,8 +80,8 @@ public class SubjectController {
 
 	@DeleteMapping(value = "/subject/{id}")
 	@ResponseStatus(HttpStatus.OK)
-	public void deletSubject(@PathVariable Long id) {
+	public ResponseEntity<String> deletSubject(@PathVariable Long id) {
 		subjectServiceImpl.deleteSubject(id);
-		return;
+		return ResponseEntity.ok(null);
 	}
 }
