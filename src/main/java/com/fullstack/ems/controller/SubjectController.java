@@ -57,11 +57,13 @@ public class SubjectController {
 	public RepresentationModel<?> getSubject(@PathVariable Long id) {
 		Subject subject = subjectServiceImpl.getSubject(id).get();
 		
-		Link nodeLink = Link.of("/ems/v1/subject/{id}");
-		nodeLink.expand(subject.getId());
+		Link nodeLink = Link.of("/ems/v1/subject/{id}")
+							.expand(subject.getId());
 		
 		HalModelBuilder halModelBuilder = HalModelBuilder.halModelOf(EntityModel.of(subject));
 		halModelBuilder.link(nodeLink.withRel(IanaLinkRelations.SELF));
+		halModelBuilder.link(nodeLink.withRel("update"));
+		halModelBuilder.link(nodeLink.withRel("delete"));
 		return halModelBuilder.build();
 	}
 
