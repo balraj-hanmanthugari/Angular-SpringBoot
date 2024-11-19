@@ -20,6 +20,9 @@
         grid-area: menu;
         background-color: lightgray;
         width: 200px;
+        .active {
+            background-color: white;
+        }
     }
 
     .grid-main {

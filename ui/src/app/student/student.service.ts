@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/internal/Observable';
 import { Student } from './student.model';
+import { BehaviorSubject, ReplaySubject, Subject } from 'rxjs';
 
 const baseUrl = 'http://localhost:8080/ems/v1/student';
 
@@ -9,7 +10,17 @@ const baseUrl = 'http://localhost:8080/ems/v1/student';
   providedIn: 'any'
 })
 export class StudentService {
+  selectedStudent: any;
 
+  private studentSubject = new ReplaySubject<Student>(1);
+
+  setSelectedStudent(student: any) {
+    this.studentSubject.next(student);
+  }
+
+  getSelectedStudent() {
+    return this.studentSubject;
+  }
 
   constructor(private http: HttpClient) { }
 

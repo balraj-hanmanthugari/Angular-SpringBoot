@@ -62,7 +62,8 @@ export class StudentListComponent implements OnInit {
 
   editStudent() {
     if (this.selectedRows[0]?.data.id)
-      this.router.navigate(['/student/form', this.selectedRows[0]?.data.id, this.selectedRows[0]?.data]);
+      this.studentService.setSelectedStudent(this.selectedRows[0]?.data);
+      this.router.navigate(['/student/form', this.selectedRows[0]?.data.id]);
   }
 
   onCellClicked(event: any) {

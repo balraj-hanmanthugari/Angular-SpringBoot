@@ -7,6 +7,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { AgGridAngular } from 'ag-grid-angular'; // Angular Data Grid Component
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NavigationService } from '../shared/service/navigation.service';
 
 const routes: Routes = [
   {
@@ -15,11 +17,13 @@ const routes: Routes = [
   },
   {
     path: 'form',
-    component: StudentFormComponent
+    component: StudentFormComponent,
+    canDeactivate: [NavigationService]
   },
   {
     path: 'form/:id',
     component: StudentFormComponent
+    //canDeactivate: [NavigationService]
   }
 ];
 
@@ -29,13 +33,15 @@ const routes: Routes = [
     StudentListComponent
   ],
   providers: [
-    StudentService
+    StudentService,
+    NavigationService
   ],
   imports: [
     CommonModule,
     AgGridAngular,
     FormsModule,
     HttpClientModule,
+    NgbModule,
     RouterModule.forChild(routes)
   ]
 })
