@@ -1,0 +1,53 @@
+spring:
+  application:
+    name: EMS
+  thymeleaf: 
+    prefix: classpath:/templates/
+    suffix: .html
+  main:
+    web-application-type: reactive
+    allow-bean-definition-overriding: true
+  datasource:
+    url: jdbc:mysql://localhost:3306/ems
+    username: root
+    password: bpass
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+  batch:
+    jdbc:
+      initialize-schema: always
+    job:
+      enabled: false
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      routes:
+        - id: subject
+          uri: http://localhost:8091/
+          predicates:
+            - Path=/sms/**
+management:
+  endpoint:
+    gateway:
+      enabled: true
+    health:
+      enabled: true
+    metrics:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: gateway,health,metrics
+logging:
+  file:
+    path: C:/Users/HI/Balraj/SpringLogs
+  level:
+    org:
+      hibernate:
+        SQL: DEBUG
+        type: TRACE

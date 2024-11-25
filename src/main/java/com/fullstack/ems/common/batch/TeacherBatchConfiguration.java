@@ -61,8 +61,8 @@ public class TeacherBatchConfiguration {
 		};
 	}
 
-	@Bean
-	public JobExecutionListener jobExecutionListener() {
+    @Bean
+    JobExecutionListener jobExecutionListener() {
 		return new TeacherJobExecutionListener();
 	}
 

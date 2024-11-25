@@ -32,12 +32,6 @@ public class EmployeeController {
 
 	final Logger logger = LoggerFactory.getLogger(EmployeeController.class);
 
-	@GetMapping(value = "/login")
-	public String loginEmployeeForm(Model model) {
-		logger.info("in employee login form method");
-		return "employee-login";
-	}
-
 	@GetMapping(value = "/list")
 	public String getEmployees(Model model) {
 		logger.info("in employee list method");
@@ -47,11 +41,10 @@ public class EmployeeController {
 	}
 
 	@GetMapping(value = "/form")
-	public ModelAndView getEmployeeAddFom(ModelAndView modelAndView) {
+	public String getEmployeeAddFom(Model model) {
 		Employee employee = new Employee();
-		modelAndView.addObject("employee", employee);
-		modelAndView.setViewName("employee-form");
-		return modelAndView;
+		model.addAttribute("employee", employee);
+		return "employee-form";
 	}
 
 	@PostMapping(value = "/form")
@@ -65,11 +58,11 @@ public class EmployeeController {
 	}
 
 	@GetMapping(value = "/form/{id}")
-	public String getEmployeeUpdateFom(@PathVariable Long id, ModelMap modelMap) {
+	public String getEmployeeUpdateFom(@PathVariable Long id, Model model) {
 		Optional<Employee> optionalEmployee = employeeServiceImpl.getEmployee(id);
 		Employee employee = optionalEmployee.get(); // optionalEmployee.get() - to get Employee from Optional<Employee>
 		// supports the use of put method from java.util.Map interface
-		modelMap.put("employee", employee);
+		model.addAttribute("employee", employee);
 		return "employee-form";
 	}
 

@@ -11,11 +11,6 @@
 
 <body>
 	<div>
-		<h1 th:inline="text">Hello <span sec:authentication="name"></span>! 
-			<form th:action = "@{/logout}" method = "Get">
-				<input type = "submit" value = "Sign Out"/>
-			</form>
-		</h1> 
 		<h1 th:text="#{ems.form.title}"></h1>
 		<a th:href="@{/ems/employee/form}" th:text="#{ems.form.add-employee}"></a>
 		<div class="employee-list-table">
