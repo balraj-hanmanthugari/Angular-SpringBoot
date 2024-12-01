@@ -11,7 +11,7 @@ import { combineLatest, concat, map, merge } from 'rxjs';
   templateUrl: './student-form.component.html',
   styleUrl: './student-form.component.scss'
 })
-export class StudentFormComponent implements AfterViewChecked, OnInit{
+export class StudentFormComponent implements AfterViewChecked, OnInit {
   addTitle: String = "Add Student";
   editTitle: String = "Edit Student";
   isEdit: Boolean = false;
@@ -23,28 +23,26 @@ export class StudentFormComponent implements AfterViewChecked, OnInit{
     firstName: "",
     lastName: "",
     address: {
-      id: 0,
       description: ""
     }
   };
 
-  cities: any = [{id: 1, description: "Hyderbad"}, {id: 2, description: "Bangalore"}, {id: 3, description: "Mumbai"}, {id: 4, description: "Delhi"}, {id: 5, description: "Kolkata"}];
-  city: any;
-  selectedItem: any;
+  cities: any = ["Hyderbad", "Bangalore", "Mumbai", "Delhi", "Kolkata"];
+  selectedCity = "";
 
   @ViewChild('studentForm') stuForm: NgForm | undefined; //template reference variable
 
   constructor(private studentService: StudentService, private route: ActivatedRoute,
     private router: Router, private navigationService: NavigationService) {
     this.studentService.getSelectedStudent().subscribe((data: any) => {
-          this.student = data;
+      this.student = data;
     });
     route.paramMap.subscribe((data: any) => {
       if (data.params.id) {
         this.student.id = data.params.id;
         this.isEdit = true;
-        
-        if(!this.student || !this.student.firstName) {
+
+        if (!this.student || !this.student.firstName) {
           this.getStudent(data.params.id);
         }
       } else {
@@ -62,11 +60,11 @@ export class StudentFormComponent implements AfterViewChecked, OnInit{
       }
     })).subscribe((data) => {
       console.log(data);
-    }); 
+    });
   }
 
   ngAfterViewChecked() {
-    if(this.stuForm) {
+    if (this.stuForm) {
       this.setFormChangesExist(this.stuForm.form.touched);
     }
   }
@@ -83,11 +81,12 @@ export class StudentFormComponent implements AfterViewChecked, OnInit{
   }
 
   saveStudent(studentForm: any) {
-    if(studentForm.form.value.addressId) {
-      this.selectedItem = this.cities.filter((city: any) => {
-        return city.id === Number(studentForm.form.value.addressId);
-      });
-      this.student.address = (this.selectedItem && this.selectedItem.length) ? this.selectedItem[0]: {};
+    if(this.student.address) {
+      this.student.address.description = this.selectedCity;
+    } else {
+      this.student.address = {
+        description: this.selectedCity
+      }
     }
     if (this.isEdit) {
       this.studentService.update(this.student.id, this.student).subscribe({
@@ -117,10 +116,10 @@ export class StudentFormComponent implements AfterViewChecked, OnInit{
   }
 
   showAlert(type: any) {
-    type === 'success'? this.hideSuccessMessage = false: this.hideFailureMessage = false;
+    type === 'success' ? this.hideSuccessMessage = false : this.hideFailureMessage = false;
   }
 
   closeAlert(type: any) {
-    type === 'success'? this.hideSuccessMessage = true: this.hideFailureMessage = true;
+    type === 'success' ? this.hideSuccessMessage = true : this.hideFailureMessage = true;
   }
 }

@@ -31,7 +31,7 @@ public class Student {
 	@Column
 	private Date dateOfBirth;
 
-	@OneToOne(cascade = CascadeType.MERGE)
+	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "address_id", referencedColumnName = "id")
 	private Address address;
 

@@ -17,8 +17,8 @@ const routes: Routes = [
   },
   {
     path: 'form',
-    component: StudentFormComponent,
-    canDeactivate: [NavigationService]
+    component: StudentFormComponent
+    //canDeactivate: [NavigationService]
   },
   {
     path: 'form/:id',

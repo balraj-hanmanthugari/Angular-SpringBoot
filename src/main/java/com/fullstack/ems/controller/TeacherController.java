@@ -28,6 +28,7 @@ import com.fullstack.ems.service.TeacherServiceImpl;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.AddressException;
 
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/ems/v1")
 public class TeacherController {
@@ -71,7 +72,6 @@ public class TeacherController {
 	// Uses Rest Template
 	@GetMapping(value = "/teacher/{id}/subject")
 	@ResponseStatus(HttpStatus.OK)
-	@CrossOrigin(origins = "http://localhost:8080")
 	public String getSubjects(@PathVariable(required = true) Long id) {
 		return teacherServiceImpl.getSubjects(id);
 	}
@@ -79,7 +79,6 @@ public class TeacherController {
 	// Uses Web Client
 	@GetMapping(value = "/teacher/subject")
 	@ResponseStatus(HttpStatus.OK)
-	@CrossOrigin(origins = "http://localhost:8080")
 	public String getSubjects() {
 		return teacherServiceImpl.getSubjects();
 	}
